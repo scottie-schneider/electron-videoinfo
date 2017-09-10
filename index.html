@@ -14,6 +14,8 @@
 		<button type="submit">Get info</button>
 	</form>
 
+	<h1 id="result"></h1>
+
 	<script>
 	const electron = require('electron');
 	const { ipcRenderer } = electron;
@@ -23,8 +25,12 @@
 		event.preventDefault();
 		const { path } = document.querySelector('input').files[0];
 		// IPC - Inter Process Communication system
+		// https://screencast.com/t/39NKGCBwbR
 		ipcRenderer.send('video:submit', path);
 	});
+	ipcRenderer.on('video:metadata', (event, duration) => {
+		document.querySelector('#result').innerHTML = `Video is ${duration} seconds in length`;
+	})
 	</script>
 </body>
 </html>
