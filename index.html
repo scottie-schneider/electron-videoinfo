@@ -15,10 +15,15 @@
 	</form>
 
 	<script>
+	const electron = require('electron');
+	const { ipcRenderer } = electron;
+
 	document.querySelector('form').addEventListener('submit', (event) => {
 		// Stop the form from posting
 		event.preventDefault();
-		const file = document.querySelector('input').files[0];
+		const { path } = document.querySelector('input').files[0];
+		// IPC - Inter Process Communication system
+		ipcRenderer.send('video:submit', path);
 	});
 	</script>
 </body>
